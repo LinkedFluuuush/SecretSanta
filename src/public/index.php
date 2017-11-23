@@ -1,8 +1,10 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \Smarty as Smarty;
 
 require '../vendor/autoload.php';
+require('../smarty/Smarty.class.php');
 
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
@@ -11,6 +13,13 @@ $config['db']['host']   = "localhost:3306";
 $config['db']['user']   = "root";
 $config['db']['pass']   = "root@123";
 $config['db']['dbname'] = "";
+
+$smarty = new Smarty();
+
+$smarty->setTemplateDir('../smarty/templates');
+$smarty->setCompileDir('../smarty/templates_c');
+$smarty->setCacheDir('../smarty/cache');
+$smarty->setConfigDir('../smarty/configs');
 
 $app = new \Slim\App(["settings" => $config]);
 $container = $app->getContainer();
@@ -31,9 +40,21 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 
+$app->get('/', function (Request $request, Response $response) {
+    global $smarty;
+    
+    $response->getBody()->write($smarty->fetch('index.tpl'));
+    
+    return $response;
+});
+
 $app->get('/hello/{name}', function (Request $request, Response $response) {
+    global $smarty;
     $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
+    
+    $smarty->assign('name', $name);
+    
+    $response->getBody()->write($smarty->fetch('building.tpl'));
     
     $this->logger->addInfo("Something interesting happened");
     return $response;
