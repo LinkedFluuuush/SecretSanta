@@ -55,18 +55,6 @@ $app->get('/login', UserController::class.':showLogin');
 
 $app->get('/logout', UserController::class.':doLogout');
 
-$app->get('/hello/{name}', function (Request $request, Response $response) {
-    global $smarty;
-    $smarty->assign("page", "hello");
-    
-    $name = $request->getAttribute('name');
-    
-    $smarty->assign('name', $name);
-    
-    $response->getBody()->write($smarty->fetch('building.tpl'));
-    
-    $this->logger->addInfo("Something interesting happened");
-    return $response;
-});
+$app->get('/{path:.*}', Controller::class.':showBuilding');
 
 $app->run();

@@ -2,10 +2,10 @@
 <html>
 <head>
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap.css">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="css/signin.css">
+<link rel="stylesheet" href="/css/signin.css">
 
 <title>Secret Santa !</title>
 <style>

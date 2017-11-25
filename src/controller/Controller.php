@@ -1,4 +1,7 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
 class Controller{
     public static $deps;
     
@@ -24,5 +27,13 @@ class Controller{
             $user = AppUser::findAppUserById($_SESSION['user']);
             $smarty->assignByRef("user", $user);
         }
+    }
+    
+    public function showBuilding(Request $request, Response $response, $args){
+        global $smarty;
+        $smarty->assign("page", "building");
+        
+        $response->getBody()->write($smarty->fetch('building.tpl'));
+        return $response;
     }
 }
