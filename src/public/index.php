@@ -9,10 +9,6 @@ require('../smarty/Smarty.class.php');
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
-$config['db']['host']   = "localhost:3306";
-$config['db']['user']   = "root";
-$config['db']['pass']   = "root@123";
-$config['db']['dbname'] = "";
 
 $smarty = new Smarty();
 
@@ -32,24 +28,26 @@ $container['logger'] = function($c) {
 };
 
 $container['db'] = function ($c) {
-    $db = $c['settings']['db'];
-    $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
-        $db['user'], $db['pass']);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    return $pdo;
+    return Database::getInstance();
 };
 
-$app->get('/', function (Request $request, Response $response) {
-    global $smarty;
-    
-    $response->getBody()->write($smarty->fetch('index.tpl'));
-    
-    return $response;
-});
+$container['conf'] = function ($c) {
+    /** @var Config $config */
+    $config = new Config("../config/dbConfig.ini");
+    return $config;
+};
+
+$container['IndexController'] = function ($container) {
+    return new IndexController($container);
+};
+
+
+$app->get('/', IndexController::class.':showIndex');
 
 $app->get('/hello/{name}', function (Request $request, Response $response) {
     global $smarty;
+    $smarty->assign("page", "hello");
+    
     $name = $request->getAttribute('name');
     
     $smarty->assign('name', $name);

@@ -5,8 +5,13 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"" : "classes/",
-			"" : "smarty/"
+			"" : [
+				"classes/",
+				"classes/Model/",
+				"smarty/",
+				"controller/",
+				"config/"
+			]
 		}
 	}
 }
