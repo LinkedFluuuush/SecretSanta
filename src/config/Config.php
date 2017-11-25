@@ -8,6 +8,8 @@ class Config {
     private $config;
     
     public function __construct($config_ini){
+        $this->config = new stdClass();
+        
         $this->addIni($config_ini);
     }
     

@@ -43,7 +43,7 @@ class Database{
             $execReturn = $statement->execute();
             
             if ($execReturn === FALSE){
-                handleDbError($name, $sql, $bindValues);
+                $this->handleDbError($name, $sql, $bindValues);
             } else {
                 if(strpos($name, "get") === 0){
                     $property = lcfirst(substr($name, 3));
@@ -51,7 +51,7 @@ class Database{
                     if(method_exists($this, '__fetch'.$property)){
                         $fetchReturn = call_user_func_array(array($this, '__fetch'.$property), array($statement));
                         if($fetchReturn === FALSE){
-                            handleDbError($name, $sql, $bindValues);
+                            $this->handleDbError($name, $sql, $bindValues);
                         } else {
                             return $fetchReturn;
                         }

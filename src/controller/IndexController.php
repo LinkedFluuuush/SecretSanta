@@ -7,12 +7,7 @@ class IndexController extends Controller{
         global $smarty;
         $smarty->assign("page", "index");
         
-        $user = AppUser::findAppUserById(1);
-        
-        $smarty->assignByRef("user", $user);
-        
         $response->getBody()->write($smarty->fetch('index.tpl'));
-        
         return $response;
         
     }
