@@ -1,9 +1,9 @@
 {include file='header.tpl'}
 <div style="padding: 3rem 1.5rem; text-align: center;">
 
-    {if $error}
+    {if isset($error)}
         <div class="alert alert-danger" role="alert">
-            <strong>Nous n'avons pas pu vous identifier.</strong> Votre nom d'utilisateur ou votre mot de passe est incorrect.
+            <strong>Nous n'avons pas pu vous identifier.</strong> {$error}
         </div>
     {/if}
 

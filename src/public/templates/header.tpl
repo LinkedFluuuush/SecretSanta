@@ -38,21 +38,21 @@ body {
                         <a class="dropdown-item active" href="#">Organiser un père noël secret</a> <a class="dropdown-item" href="#">Mes pères noëls secrets</a>
                     </div></li>
             </ul>
-            {if !$user}
-            <form class="form-inline my-2 my-lg-0 nav-form" action="/login" method="POST">
-                <input class="form-control mr-sm-2" placeholder="Adresse e-mail" aria-label="Adresse e-mail" type="mail" name="mail" id="mail" required /> <input class="form-control mr-sm-2"
-                    placeholder="Mot de passe" aria-label="Mot de passe" type="password" name="password" id="password" required
-                /> <input type="hidden" name="redirect" id="redirect" value="{$current_page}" />
-                <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-2" type="submit" id="login" name="login">Connexion</button>
-            </form>
-            <a class="btn btn-outline-info my-2 my-sm-0 mr-sm-2" href="/signin" id="signin">Inscription</a>
-            {else}
+            {if isset($user)}
             <ul class="navbar-nav float-right">
                 <li class="nav-item {if $page == "list"}active{/if} float-right" ><a class="nav-link" href="/user/{$user->getAppUserId()}">{$user->getAppUserFirstname()} {$user->getAppUserName()}{if $page ==
                         "user"}<span class="sr-only">(current)</span>{/if}
                 </a></li>
             </ul>
             <a class="btn btn-outline-info my-2 my-sm-0 mr-sm-2" href="/logout" id="logout">Déconnexion</a>
+            {else}
+            <form class="form-inline my-2 my-lg-0 nav-form" action="/login" method="POST">
+                <input class="form-control mr-sm-2" placeholder="Adresse e-mail" aria-label="Adresse e-mail" type="email" name="mail" id="mail" required /> <input class="form-control mr-sm-2"
+                    placeholder="Mot de passe" aria-label="Mot de passe" type="password" name="password" id="password" required
+                /> <input type="hidden" name="redirect" id="redirect" value="{$current_page}" />
+                <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-2" type="submit" id="login" name="login">Connexion</button>
+            </form>
+            <a class="btn btn-outline-info my-2 my-sm-0 mr-sm-2" href="/signin" id="signin">Inscription</a>
             {/if}
         </div>
     </nav>

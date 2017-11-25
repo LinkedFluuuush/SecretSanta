@@ -52,7 +52,18 @@ class UserController extends Controller{
         
         $queryParams = $request->getQueryParams();
         if(isset($queryParams['error'])){
-            $smarty->assign("error", $queryParams['error']);
+            $error = $queryParams['error'];
+            
+            switch($error){
+                case "incorrectLoginOrPassword":
+                    $errorText = "Votre nom d'utilisateur ou votre mot de passe est incorrect.";
+                    break;
+                default:
+                    $errorText = "Une erreur est survenue.";
+                    break;
+            }
+            
+            $smarty->assign("error", $errorText);
         }
         
         $response->getBody()->write($smarty->fetch("login.tpl"));

@@ -1,7 +1,7 @@
 {include file='header.tpl'}
 <div style="padding: 3rem 1.5rem; text-align: center;">
 
-    {if $user}
+    {if isset($user)}
         <h1>Hello {$user->getAppUserFirstname()} {$user->getAppUserName()} !</h1>
     {else}
         <h1>Hello you !</h1>
